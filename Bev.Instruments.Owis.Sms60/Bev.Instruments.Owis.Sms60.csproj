@@ -7,8 +7,8 @@
     <ProjectGuid>{D37EA6E5-09F7-4154-BF35-DF5D09E11638}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Bev.Intruments.Owis.Sms60</RootNamespace>
-    <AssemblyName>Bev.Intruments.Owis.Sms60</AssemblyName>
+    <RootNamespace>Bev.Instruments.Owis.Sms60</RootNamespace>
+    <AssemblyName>Bev.Instruments.Owis.Sms60</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
