@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33214.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bev.Instruments.Owis.Sms60", "Bev.Instruments.Owis.Sms60\Bev.Instruments.Owis.Sms60.csproj", "{D37EA6E5-09F7-4154-BF35-DF5D09E11638}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSms", "TestSms\TestSms.csproj", "{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D37EA6E5-09F7-4154-BF35-DF5D09E11638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37EA6E5-09F7-4154-BF35-DF5D09E11638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37EA6E5-09F7-4154-BF35-DF5D09E11638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37EA6E5-09F7-4154-BF35-DF5D09E11638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB037585-0D72-4E73-8A9C-13CE02F4D014}
+	EndGlobalSection
+EndGlobal
