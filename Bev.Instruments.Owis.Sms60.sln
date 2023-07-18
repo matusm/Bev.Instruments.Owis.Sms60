@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bev.Instruments.Owis.Sms60"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSms", "TestSms\TestSms.csproj", "{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetTo", "SetTo\SetTo.csproj", "{6B2A1083-D49A-4E96-AFF2-629BA5389998}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8B2DFB2-C9C5-4CDA-AE8D-A7CE2AD9B27C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B2A1083-D49A-4E96-AFF2-629BA5389998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B2A1083-D49A-4E96-AFF2-629BA5389998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B2A1083-D49A-4E96-AFF2-629BA5389998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B2A1083-D49A-4E96-AFF2-629BA5389998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
