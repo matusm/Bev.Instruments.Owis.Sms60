@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Threading;
 using Bev.Instruments.Owis.Sms60;
+using Bev.Instruments.Conrad.Relais;
 
 namespace SixD
 {
@@ -10,10 +11,12 @@ namespace SixD
     {
         const string PORT_SMS60 = "COM1";
         const string PORT_REL = "COM2";
-        const int HOLD_TIME = 1_000; // in ms
+        const int HOLD_TIME = 1_000;    // in ms
+        const int CHANNEL = 1;          // relay number
 
         static Sms60 sms60;
         static PointCloud targets;
+        static ConradRelais relay;
 
         static void Main(string[] args)
         {
@@ -25,6 +28,7 @@ namespace SixD
             LoadTargetsFromCsv(targetFilename);
             Console.WriteLine($"Number of targets: {targets.NumberOfPoints}");
 
+            relay = new ConradRelais(PORT_REL);
             sms60 = new Sms60(PORT_SMS60);
             sms60.MoveToReferenceWait();
 
@@ -83,9 +87,9 @@ namespace SixD
 
         static void Signal()
         {
-            // close contact
+            relay.On(CHANNEL);
             Thread.Sleep(HOLD_TIME);
-            // open contact
+            relay.Off(CHANNEL);
         }
 
     }

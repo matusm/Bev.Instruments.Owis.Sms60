@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Bev.Instruments.Conrad.Relais">
+      <HintPath>..\..\Bev.Instruments.Conrad.Relais\bin\Release\Bev.Instruments.Conrad.Relais.dll</HintPath>
+    </Reference>
     <Reference Include="Bev.Instruments.Owis.Sms60">
       <HintPath>..\Bev.Instruments.Owis.Sms60\bin\Release\Bev.Instruments.Owis.Sms60.dll</HintPath>
     </Reference>
