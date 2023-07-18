@@ -73,6 +73,14 @@ namespace Bev.Instruments.Owis.Sms60
         public string SendAndRead(string command, Axes axis) => SendAndRead(command, axis, "");
         public string SendAndRead(string command, string parameter) => SendAndRead(command, Axes.None, parameter);
 
+        public void GoTo(double x, double y)
+        {
+            int xSteps = (int)(x / XAxisScaleFactor);
+            int ySteps = (int)(y / YAxisScaleFactor);
+            MoveAbsoluteWait(xSteps, ySteps);
+        }
+
+
         // make a reference move and resets internal counters to 0
         public void MoveToReferenceWait(Axes axis)
         {
@@ -84,17 +92,16 @@ namespace Bev.Instruments.Owis.Sms60
         {
             for (int i = 1; i <= NumberOfAxis; i++)
             {
-                SendAndRead("REF", (Axes)i, "2");
+                MoveToReferenceWait((Axes)i);
             }
-            ReturnOnHalt();
         }
-        
+
         public void MoveRelative(Axes axis, int steps)
         {
             if (steps < 0)
             {
                 // TODO check if possible !
-                MoveRelativeRaw(axis, steps-BACKLASH);
+                MoveRelativeRaw(axis, steps - BACKLASH);
                 ReturnOnHalt();
                 MoveRelativeRaw(axis, BACKLASH);
                 return;
@@ -112,7 +119,7 @@ namespace Bev.Instruments.Owis.Sms60
         {
             if (GetCounter(axis) > steps)
             {
-                MoveAbsoluteRaw(axis, steps-BACKLASH);
+                MoveAbsoluteRaw(axis, steps - BACKLASH);
                 ReturnOnHalt();
             }
             MoveAbsoluteRaw(axis, steps);
@@ -163,10 +170,10 @@ namespace Bev.Instruments.Owis.Sms60
         public void ReturnOnHalt()
         {
             int i = 0;
-            while(AxisIsMoving())
+            while (AxisIsMoving())
             {
                 i++;
-                if (i > MAX_ITERATION) 
+                if (i > MAX_ITERATION)
                     return;
             }
         }
@@ -248,7 +255,7 @@ namespace Bev.Instruments.Owis.Sms60
         {
             string str = SendAndRead("?VD");
             str = str.Remove(0, Math.Min(1, str.Length));
-            if (str.Length > 1) 
+            if (str.Length > 1)
                 return str;
             return string.Empty;
         }
