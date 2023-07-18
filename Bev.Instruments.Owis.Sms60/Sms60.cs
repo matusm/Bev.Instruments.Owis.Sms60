@@ -80,7 +80,6 @@ namespace Bev.Instruments.Owis.Sms60
             MoveAbsoluteWait(xSteps, ySteps);
         }
 
-
         // make a reference move and resets internal counters to 0
         public void MoveToReferenceWait(Axes axis)
         {
