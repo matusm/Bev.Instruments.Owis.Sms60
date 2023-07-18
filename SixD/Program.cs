@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using Bev.Instruments.Owis.Sms60;
 using Bev.Instruments.Conrad.Relais;
+using Bev.UI;
 
 namespace SixD
 {
@@ -11,8 +12,9 @@ namespace SixD
     {
         const string PORT_SMS60 = "COM1";
         const string PORT_REL = "COM2";
-        const int HOLD_TIME = 1_000;    // in ms
-        const int CHANNEL = 1;          // relay number
+        const int SIGNAL_DURATION = 1_000;  // in ms
+        const int SIGNAL_PULSE = 100;       // in ms
+        const int CHANNEL = 1;              // relay number
 
         static Sms60 sms60;
         static PointCloud targets;
@@ -22,37 +24,61 @@ namespace SixD
         {
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
 
+            ConsoleUI.Welcome();
+
+            #region Input section
             string targetFilename = "SixDtarget.csv";
             string resultFilename = "SixDresult.csv";
 
+            if (args.Length == 1)
+            {
+                targetFilename = args[0];
+            }
+
+            if (args.Length == 2)
+            {
+                targetFilename = args[0];
+                resultFilename = args[1];
+            }
+
             LoadTargetsFromCsv(targetFilename);
-            Console.WriteLine($"Number of targets: {targets.NumberOfPoints}");
 
-            relay = new ConradRelais(PORT_REL);
-            sms60 = new Sms60(PORT_SMS60);
-            sms60.MoveToReferenceWait();
+            if (targets.NumberOfPoints == 0)
+            {
+                ConsoleUI.ErrorExit($"No targets in {targetFilename}!", 1);
+            }
 
-            Point origin = new Point(0,0);
+            ConsoleUI.WriteLine($"Number of targets: {targets.NumberOfPoints}");
+            #endregion
+
+            ConsoleUI.StartOperation("Initializing hardware");
+                relay = new ConradRelais(PORT_REL);
+                sms60 = new Sms60(PORT_SMS60);
+                sms60.MoveToReferenceWait();
+            ConsoleUI.Done();
+
+            Point origin = new Point(0, 0);
             for (int i = 0; i < targets.NumberOfPoints; i++)
             {
                 Point target = targets.Points[i];
-                sms60.GoTo(target.X, target.Y);
+                ConsoleUI.StartOperation($"Moving to point ({target.X} , {target.Y})");
+                    sms60.GoTo(target.X, target.Y);
+                ConsoleUI.Done();
                 Point position = GetPosition();
-                if (i == 0) 
-                    origin = new Point(position);
+                if (i == 0) origin = new Point(position); // for absolute values comment this line
                 Signal();
-                string csvLine = $"{i},{position.X-origin.X:F5},{position.Y - origin.Y:F5}";
+                string csvLine = $"{i},{position.X - origin.X:F5},{position.Y - origin.Y:F5}";
                 Console.WriteLine(csvLine);
             }
 
             sms60.MoveToReferenceWait();
-
         }
 
         static void LoadTargetsFromCsv(string filename)
         {
             targets = new PointCloud();
             StreamReader reader = new StreamReader(File.OpenRead(filename));
+            ConsoleUI.ReadingFile(filename);
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
@@ -68,6 +94,7 @@ namespace SixD
                 }
             }
             reader.Close();
+            ConsoleUI.Done();
         }
 
         static double MyParse(string token)
@@ -87,9 +114,12 @@ namespace SixD
 
         static void Signal()
         {
+            ConsoleUI.StartOperation("Send signal to remote sensor");
             relay.On(CHANNEL);
-            Thread.Sleep(HOLD_TIME);
+            Thread.Sleep(SIGNAL_PULSE);
             relay.Off(CHANNEL);
+            Thread.Sleep(SIGNAL_DURATION);
+            ConsoleUI.Done();
         }
 
     }

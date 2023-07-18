@@ -39,6 +39,9 @@
     <Reference Include="Bev.Instruments.Owis.Sms60">
       <HintPath>..\Bev.Instruments.Owis.Sms60\bin\Release\Bev.Instruments.Owis.Sms60.dll</HintPath>
     </Reference>
+    <Reference Include="Bev.UI">
+      <HintPath>..\..\Bev.UI.ConsoleUI\Bev.UI\bin\Release\Bev.UI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
