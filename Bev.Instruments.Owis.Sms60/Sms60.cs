@@ -80,6 +80,16 @@ namespace Bev.Instruments.Owis.Sms60
             MoveAbsoluteWait(xSteps, ySteps);
         }
 
+        // faster, but now backslash compensation!
+        public void GoToRaw(double x, double y)
+        {
+            int xSteps = (int)(x / XAxisScaleFactor);
+            int ySteps = (int)(y / YAxisScaleFactor);
+            MoveAbsoluteRaw(Axes.X, xSteps);
+            MoveAbsoluteRaw(Axes.Y, ySteps);
+            ReturnOnHalt();
+        }
+
         // make a reference move and resets internal counters to 0
         public void MoveToReferenceWait(Axes axis)
         {

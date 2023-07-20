@@ -83,7 +83,7 @@ namespace SixD
             hOutfile.Close();
 
             ConsoleUI.StartOperation("Perform referencing");
-                sms60.GoTo(1, 1); // to speed things up
+                sms60.GoToRaw(1.0, 1.0); // to speed things up
                 sms60.MoveToReferenceWait();
             ConsoleUI.Done();
             ConsoleUI.WriteLine($"Data written to file {resultFilename}");
@@ -130,10 +130,10 @@ namespace SixD
         static void Signal()
         {
             ConsoleUI.StartOperation("Send signal to remote sensor");
-            relay.On(CHANNEL);
-            Thread.Sleep(SIGNAL_PULSE);
-            relay.Off(CHANNEL);
-            Thread.Sleep(SIGNAL_DURATION);
+                relay.On(CHANNEL);
+                Thread.Sleep(SIGNAL_PULSE);
+                relay.Off(CHANNEL);
+                Thread.Sleep(SIGNAL_DURATION);
             ConsoleUI.Done();
         }
 
