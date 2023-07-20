@@ -39,7 +39,7 @@ namespace Bev.Instruments.Owis.Sms60
         private const int DELAY_RESET = 5000;   // in ms, delay after reseting the controller
         private const int MAX_ITERATION = 10000;
         private const int MAX_SPEED = 8191;
-        private const int BACKLASH = 1000;
+        private const int BACKLASH = 2000;
         private const double SCALE_FACTOR = 0.00008; // mm/step
 
         public Sms60(string portName)

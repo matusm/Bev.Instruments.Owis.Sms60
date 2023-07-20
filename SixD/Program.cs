@@ -19,8 +19,8 @@ namespace SixD
         const bool RELATIVE = true;         // coordinates relative to first point
 
         static Sms60 sms60;
-        static PointCloud targets;
         static ConradRelais relay;
+        static PointCloud targets;
 
         static void Main(string[] args)
         {
@@ -29,8 +29,11 @@ namespace SixD
             ConsoleUI.Welcome();
 
             #region Input section
+
+            DateTime startDate = DateTime.UtcNow;
+
             string targetFilename = "SixDtarget.csv";
-            string resultFilename = "SixDresult.csv";
+            string resultFilename = $"SixD_{startDate.ToString("yyyyMMddHHmm")}.csv";
 
             if (args.Length == 1)
             {
@@ -59,6 +62,7 @@ namespace SixD
                 sms60.MoveToReferenceWait();
                 sms60.SetSpeed(Axes.X, SPEED);
                 sms60.SetSpeed(Axes.Y, SPEED);
+                StreamWriter hOutfile = File.CreateText(resultFilename);
             ConsoleUI.Done();
 
             Point origin = new Point(0, 0);
@@ -71,14 +75,18 @@ namespace SixD
                 Point position = GetPosition();
                 if (i == 0 && RELATIVE) origin = new Point(position);
                 Signal();
-                string csvLine = $"{i},{position.X - origin.X:F5},{position.Y - origin.Y:F5}";
-                //Console.WriteLine(csvLine);
+                string csvLine = $"{i},{DateTime.UtcNow.ToString("o")},{position.X - origin.X:F5},{position.Y - origin.Y:F5}";
+                hOutfile.WriteLine(csvLine);
+                hOutfile.Flush();
             }
+            
+            hOutfile.Close();
 
             ConsoleUI.StartOperation("Perform referencing");
                 sms60.GoTo(1, 1); // to speed things up
                 sms60.MoveToReferenceWait();
             ConsoleUI.Done();
+            ConsoleUI.WriteLine($"Data written to file {resultFilename}");
         }
 
         static void LoadTargetsFromCsv(string filename)
