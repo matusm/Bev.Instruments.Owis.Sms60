@@ -11,10 +11,12 @@ namespace SixD
     class Program
     {
         const string PORT_SMS60 = "COM1";
-        const string PORT_REL = "COM2";
+        const string PORT_REL = "COM3";
         const int SIGNAL_DURATION = 1_000;  // in ms
         const int SIGNAL_PULSE = 100;       // in ms
         const int CHANNEL = 1;              // relay number
+        const int SPEED = 1000;             // speed of stepper motors
+        const bool RELATIVE = true;         // coordinates relative to first point
 
         static Sms60 sms60;
         static PointCloud targets;
@@ -55,6 +57,8 @@ namespace SixD
                 relay = new ConradRelais(PORT_REL);
                 sms60 = new Sms60(PORT_SMS60);
                 sms60.MoveToReferenceWait();
+                sms60.SetSpeed(Axes.X, SPEED);
+                sms60.SetSpeed(Axes.Y, SPEED);
             ConsoleUI.Done();
 
             Point origin = new Point(0, 0);
@@ -65,13 +69,16 @@ namespace SixD
                     sms60.GoTo(target.X, target.Y);
                 ConsoleUI.Done();
                 Point position = GetPosition();
-                if (i == 0) origin = new Point(position); // for absolute values comment this line
+                if (i == 0 && RELATIVE) origin = new Point(position);
                 Signal();
                 string csvLine = $"{i},{position.X - origin.X:F5},{position.Y - origin.Y:F5}";
-                Console.WriteLine(csvLine);
+                //Console.WriteLine(csvLine);
             }
 
-            sms60.MoveToReferenceWait();
+            ConsoleUI.StartOperation("Perform referencing");
+                sms60.GoTo(1, 1); // to speed things up
+                sms60.MoveToReferenceWait();
+            ConsoleUI.Done();
         }
 
         static void LoadTargetsFromCsv(string filename)
